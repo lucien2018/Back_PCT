@@ -134,7 +134,7 @@ module.exports = {
   csrf: {
     enable: true,
     methods: ['POST', 'PUT', 'DELETE'],
-    filterUris: ['/api/CreationPermutation','/api/index','/api/admin','/api/enregistrement'],
+    filterUris: ['/api/CreationPermutation','/api/index','/api/admin','/api/enregistrement','/api/impression'],
     cookieOptions: {
       httpOnly: false,
       sameSite: true,

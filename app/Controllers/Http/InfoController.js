@@ -5,6 +5,7 @@ const Demande = use('App/Models/Demande')
 const Interesse = use('App/Models/Interesse')
 const Database = use('Database')
 
+
 class InfoController {
 
   async enregistrement ({ request, auth, response }) {
@@ -29,7 +30,7 @@ class InfoController {
 
   async Demandeur ({ request, response }) {
 
-    const demandeData = request.only(['noms','jeunefille','creationdate','creationemploie','creationmatricule','creationdirection','creationEtablissement','creationdiscipline','creationfonction'])
+    const demandeData = request.only(['noms','jeunefille','creationdate','creationemploie','creationmatricule','creationdirection','creationEtablissement','creationdiscipline','creationfonction','souhait','resident'])
      try{
 
       await Demande.create(demandeData)
@@ -49,7 +50,7 @@ class InfoController {
 
   async Interesse ({ request, response }) {
 
-    const interesseData = request.only(['nom','nomdejeune','date','emploie','matricule','direction','etablissement','discipline','fonction'])
+    const interesseData = request.only(['identifiant','nom','nomdejeune','date','emploie','matricule','direction','etablissement','discipline','fonction'])
      try{
 
       await Interesse.create(interesseData)
@@ -61,7 +62,7 @@ class InfoController {
     } catch (err) {
       return response.status(400).json({
         status: 'error',
-        message: err
+        message: 'vous avez certainement entré une information existante déjà en base de donnée'
 
       })
     }
@@ -82,7 +83,7 @@ class InfoController {
     } catch (error) {
       response.status(400).json({
         status: 'error',
-        message:'Invalid email/password.'
+        message:'email ou mot de passe invalide'
       })
     }
   }
@@ -98,14 +99,64 @@ class InfoController {
        const annonces = await Database
        .select('*')
        .from('demandes')
-       .where('id','<', 3)
+       .where('id','<=', 8)
 
        return response.json({
           annonces
        })
-
-
       }
+
+  
+   async recup({request,response}){
+
+     try {   
+      const identifian= request.only(['identifiant'])
+
+      const donnee = await Database
+      .select('*')
+      .from('demandes')
+      .where({'id': identifian.identifiant})
+
+      const autres = await Database
+      .select('*')
+      .from('interesses')
+      .where({'identifiant': identifian.identifiant})
+
+      return response.json({
+        donnee,
+        autres
+      }) 
+      
+     } catch (e) {
+      return response.status(400).json({
+        status:'error',
+        message: 'cette demande est inexistente'
+      })
+     }
+    }
+    async Delete({request, response}){
+      
+      const identifian = request.only(['identifiant'])
+      try{
+       await Database.table('demandes').where({'id': identifian.identifiant}).delete()
+       await Database.table('interesses').where({'id': identifian.identifiant}).delete()
+
+          return response.json({
+            status: 'succes',
+            SuccesMessage: 'annonce supprimé avec succes'
+            
+          })
+        
+      }catch(e){
+        return response.status(400).json({
+          status: 'error',
+          message: "impossible de faire cette supression"
+          
+        })
+      }
+
+    }
+
 }
 
 module.exports = InfoController

@@ -3,8 +3,7 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Interesse extends Model {
-
+class Commun extends Model {
 }
 
-module.exports = Interesse
+module.exports = Commun

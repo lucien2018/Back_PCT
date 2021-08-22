@@ -16,6 +16,8 @@ class DemandesSchema extends Schema {
       table.string('creationEtablissement', 225).notNullable()
       table.string('creationdiscipline', 225).notNullable()
       table.string('creationfonction', 225).notNullable()
+      table.string('resident', 225).notNullable()
+      table.string('souhait', 225).notNullable()
       table.timestamps()
     })
   }

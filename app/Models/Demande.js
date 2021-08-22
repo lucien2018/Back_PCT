@@ -4,6 +4,10 @@
 const Model = use('Model')
 
 class Demande extends Model {
+
+  interesses () {
+    return this.hasOne('App/Models/Interesse')
+  }
 }
 
 module.exports = Demande

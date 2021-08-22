@@ -23,7 +23,10 @@ Route.group(() => {
   Route.post('index', 'InfoController.Interesse')
   Route.post('enregistrement', 'InfoController.enregistrement')
   Route.post('admin', 'InfoController.loginAdmin')
+  Route.post('impression', 'InfoController.recup')
   Route.get('administration', 'InfoController.admin').middleware(['auth'])
   Route.get('index', 'InfoController.Avis')
+  Route.delete('impression', 'InfoController.Delete')
+  Route.get('impression','InfoController.recup')
 }).prefix('api')
 

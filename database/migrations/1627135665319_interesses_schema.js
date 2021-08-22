@@ -7,6 +7,7 @@ class InteressesSchema extends Schema {
   up () {
     this.create('interesses', (table) => {
       table.increments()
+      table.integer('identifiant').notNullable().unsigned().unique()
       table.string('nom', 225).notNullable()
       table.string('nomdejeune', 225).notNullable()
       table.date('date').notNullable()
