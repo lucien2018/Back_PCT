@@ -62,7 +62,7 @@ class InfoController {
     } catch (err) {
       return response.status(400).json({
         status: 'error',
-        message: 'vous avez certainement entré une information existante déjà en base de donnée'
+        message: "Cette affiche n'est plus disponible"
 
       })
     }
